@@ -23,14 +23,14 @@
 
 Spec-Driven Develop is a platform-agnostic AI agent plugin that ships two complementary skills:
 
-- **Spec-Driven Develop** — automates the full pre-development pipeline for large-scale complex tasks: deep project analysis, phased task decomposition, document-driven progress tracking, and task-specific sub-SKILL generation — all before a single line of implementation code is written.
+- **Spec-Driven Develop** — automates the full development pipeline for large-scale complex tasks: deep project analysis, phased task decomposition, document-driven progress tracking, and execution — all within a single session.
 - **Deep Discuss** — a structured deep-discussion workflow for problem analysis, brainstorming, and solution design through disciplined multi-phase thinking.
 
 No SDK. No runtime. No dependencies. Just Markdown files that any AI coding agent can read and execute.
 
 ## What It Does
 
-When you tell your agent something like "rewrite this project in Rust" or "migrate to a microservice architecture", Spec-Driven Develop kicks in with a 7-phase preparation pipeline:
+When you tell your agent something like "rewrite this project in Rust" or "migrate to a microservice architecture", Spec-Driven Develop kicks in with a 6-phase pipeline:
 
 ```
 Phase 0  Quick Intent Capture      Capture high-level direction (1-2 sentences)
@@ -46,19 +46,13 @@ Phase 3  Task Decomposition        Break work into phases, tasks, parallel lanes
     |                              + create GitHub Issues, Milestones & Project board
     |
 Phase 4  Progress Tracking         Generate MASTER.md as GitHub index or local tracker
-    |                              for cross-conversation continuity
     |
-Phase 5  Sub-SKILL Generation      Create a project-level SKILL with inlined
-    |                              S.U.P.E.R principles and code review checklist
+Phase 5  Confirm & Execute         Present plan summary, get confirmation,
+    |                              then execute all tasks (parallel or sequential)
+    |                              with adaptive control feedback loop
     |
-Phase 6  Handoff                   Present all artifacts, confirm readiness
-    |
-   ...  Development Phases         Iterative implementation with progress tracking
-    |
-Phase 7  Archive                   Preserve all artifacts for traceability
+Phase 6  Archive                   Preserve all artifacts for traceability
 ```
-
-A master progress file (`docs/progress/MASTER.md`) serves as the agent's memory anchor across conversations. No matter how many sessions a task spans, the agent always knows where things stand.
 
 ### GitHub-Native Task Tracking (New in v1.9)
 
@@ -154,7 +148,7 @@ S.U.P.E.R isn't just a reference document the agent might read — it's woven in
 - **Phase 1 — Analysis**: Every module gets a per-principle compliance score (`S🟢 U🟡 P🔴 E🟢 R🟡`). The risk assessment includes a S.U.P.E.R Architecture Health Summary with violation hotspots.
 - **Phase 2 — Intent Refinement**: Analysis findings are presented to the user so they can make informed decisions about scope and S.U.P.E.R priorities before task decomposition begins.
 - **Phase 3 — Planning**: Each task is annotated with its S.U.P.E.R design drivers (which principles matter most for that task). Early phases prioritize fixing violation hotspots before building new features.
-- **Phase 5 — Sub-SKILL**: The full S.U.P.E.R principles are **inlined verbatim** into the generated sub-SKILL (not just referenced), along with a mandatory **10-point code review checklist** that the agent must pass after every task:
+- **Phase 5 — Execution**: The S.U.P.E.R Code Review Checklist is run after every task before marking it complete. The adaptive control loop collects S.U.P.E.R compliance scores as part of execution telemetry:
 
   | Check | Principle |
   |:------|:----------|
@@ -280,7 +274,7 @@ Simply describe your task to the agent. Each skill triggers on different keyword
 
 ### Cross-Conversation Continuity
 
-When working on a long-running task across multiple conversations, the agent reads `docs/progress/MASTER.md` at the start of each new session to restore context and continue from where it left off. In GitHub modes, it also queries GitHub for the latest Issue states — PRs may have been merged since the last session.
+If a session is interrupted before completion, the agent can resume by reading `docs/progress/MASTER.md` at the start of a new session to restore context and continue from where it left off. In GitHub modes, it also queries GitHub for the latest Issue states — PRs may have been merged since the last session.
 
 ### Native Task Tracking
 
@@ -296,7 +290,7 @@ python scripts/export-progress.py docs/progress/
 
 ### Archive
 
-When all tasks are marked complete, the agent archives all workflow artifacts (analysis, plan, progress, sub-SKILL) into `docs/archives/<project-name>/` and updates an index at `docs/archives/README.md`. Nothing is deleted — everything is preserved for traceability.
+When all tasks are marked complete, the agent archives all workflow artifacts (analysis, plan, progress) into `docs/archives/<project-name>/` and updates an index at `docs/archives/README.md`. Nothing is deleted — everything is preserved for traceability.
 
 ## Project Structure
 
@@ -321,8 +315,7 @@ spec_driven_develop/
 │   │   │           ├── analysis.md           # Phase 1: with S.U.P.E.R health assessment
 │   │   │           ├── plan.md               # Phase 3: with S.U.P.E.R design constraints
 │   │   │           ├── progress.md           # Phase 4: cross-conversation tracking
-│   │   │           ├── archive.md            # Phase 7: artifact preservation
-│   │   │           └── sub-skill.md          # Phase 5: with inlined S.U.P.E.R + checklist
+│   │   │           └── archive.md            # Phase 6: artifact preservation
 │   │   └── deep-discuss/
 │   │       └── SKILL.md                      # Structured deep discussion workflow
 │   ├── agents/                               # Claude Code sub-agents (optional)
