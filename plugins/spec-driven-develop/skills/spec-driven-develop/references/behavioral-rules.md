@@ -16,7 +16,7 @@ These rules apply to every agent and every phase in the Spec-Driven Develop work
 
 6. **Respect the user's time**. Keep summaries concise. Use bullet points and tables, not walls of text.
 
-7. **Archiving is not optional**. When all tasks are done, always enter Phase 7. Archive all artifacts to `docs/archives/` for traceability — don't leave them scattered in working directories or delete them.
+7. **Archiving is not optional**. When all tasks are done, always enter Phase 6 (Archive). Archive all artifacts to `docs/archives/` for traceability — don't leave them scattered in working directories or delete them.
 
 8. **Dual-write progress updates**. When completing a task, update progress in two places for redundancy. The specific targets depend on the tracking mode:
    - **GitHub modes**: GitHub Issue (via PR with `closes #N`) + MASTER.md local index. The native platform task tool is an optional third layer.

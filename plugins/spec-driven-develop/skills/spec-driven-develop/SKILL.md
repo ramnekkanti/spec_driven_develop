@@ -6,14 +6,14 @@ description: >-
   "rebuild in [language]", "spec-driven", or describes any large-scale project transformation
   that requires planning before coding. Also triggers on Chinese keywords: "改造", "重写",
   "迁移", "重构", "大规模", "规范驱动". Performs full project analysis, task decomposition,
-  documentation generation, progress tracking setup, and task-specific sub-SKILL creation
-  before any development begins.
-version: 1.10.0
+  documentation generation, progress tracking setup, and then executes the plan within
+  the same session.
+version: 1.11.0
 ---
 
 # Spec-Driven Develop
 
-You are executing the **Spec-Driven Development** workflow — a standardized pre-development pipeline for large-scale complex tasks. Your job is to complete all preparation phases before any actual coding begins, ensuring the project has full analysis, a clear plan, trackable progress documents, and a task-specific SKILL.
+You are executing the **Spec-Driven Development** workflow — a standardized pipeline for large-scale complex tasks. Your job is to complete preparation phases (analysis, planning, progress setup), then execute the plan — all within a single session.
 
 ## Configuration
 
@@ -22,8 +22,7 @@ You are executing the **Spec-Driven Development** workflow — a standardized pr
 | Analysis output    | `docs/analysis/`             | Phase 1 analysis documents                 |
 | Plan output        | `docs/plan/`                 | Phase 3 planning documents                 |
 | Progress output    | `docs/progress/`             | Phase 4 tracking documents (incl. MASTER.md) |
-| Archive output     | `docs/archives/<project>/`   | Phase 7 archived artifacts                 |
-| Sub-SKILL install  | Project level (auto-detect)  | Platform-specific: `.cursor/skills/`, `.claude/commands/`, or project-local |
+| Archive output     | `docs/archives/<project>/`   | Phase 6 archived artifacts                 |
 | Task tracking mode | Auto-detect                  | `GITHUB_FULL`, `GITHUB_STANDARD`, or `LOCAL_ONLY` (see below) |
 | Adaptive control   | Enabled                      | Drift thresholds: annotate=20%, replan=40%, rescope=60% of phase tasks |
 
@@ -242,48 +241,13 @@ Use the templates in `references/templates/progress.md` for all progress documen
 
 ---
 
-## Phase 5: Task-Specific Sub-SKILL Generation
+## Phase 5: Confirm & Execute
 
-**Goal**: Create a project-level SKILL tailored to this specific task, encoding the interaction patterns and development standards needed for the actual implementation work.
-
-**Actions**:
-
-1. The sub-SKILL is **always installed at project level** (e.g., `.cursor/skills/`, `.claude/commands/`, or project-local directory). Do not ask the user for installation location. This keeps the sub-SKILL co-located with the project it serves and avoids polluting the global skill space.
-
-2. Determine what the sub-SKILL should contain (see `references/templates/sub-skill.md` for the full content outline):
-   - **S.U.P.E.R architecture principles — MUST be inlined verbatim**, not merely referenced. The executing agent may not have access to `references/super-philosophy.md`, so the full five principles with litmus tests must be embedded directly in the sub-SKILL body. This is the #1 most important section.
-   - **S.U.P.E.R Code Review Checklist** — a 10-point checklist that the agent must run after completing every task, before marking it as done. Include the scoring rule: all pass = proceed, 1-2 fail = fix first, 3+ fail = stop and refactor.
-   - Task-specific coding standards and conventions for the target technology, **framed through S.U.P.E.R principles** (e.g., error handling aligned with U, dependency injection aligned with P, config management aligned with E)
-   - The cross-conversation continuity protocol (read MASTER.md first)
-   - Project-specific architecture context, including the **S.U.P.E.R violation hotspots** from `docs/analysis/risk-assessment.md` that must be addressed
-   - Guidance on how to update progress documents after completing each task
-   - Phase-specific instructions relevant to the transformation type
-   - **Parallel execution protocol**: reference `references/parallel-protocol.md` for the full protocol
-   - **Adaptive control protocol**: reference `references/adaptive-control.md` for telemetry collection, drift evaluation, and automatic response actions. The sub-SKILL MUST include the Post-Task Telemetry section (see `references/templates/sub-skill.md` § 9).
-   - The archive trigger: when all tasks are done, initiate Phase 7
-
-3. **Delegate creation to the platform's native skill-creator**:
-   - On **Claude Code** or **Codex**: Invoke the platform's built-in `skill-creator` skill, providing it with the task context, the desired skill name, description, and content outline. Let the native tool handle the actual file generation and installation.
-   - On **Cursor**: If a skill-creator skill is available, use it. Otherwise, create the SKILL.md directly following the standard frontmatter + markdown format and place it in the project's skills directory.
-
-4. The generated sub-SKILL should instruct the agent to:
-   - Always read `docs/progress/MASTER.md` at the start of every conversation
-   - **Check the tracking mode** and follow the appropriate workflow:
-     - **GitHub modes**: Read the next pending Issue from GitHub, execute in a worktree, create a PR with `closes #N`, and comment on the Issue. Progress is tracked via Issue state (open/closed).
-     - **LOCAL_ONLY mode**: Read the next pending task from the phase file, execute it, update checkboxes.
-   - **Run the S.U.P.E.R Code Review Checklist** after completing each task, before marking it done
-   - Update the "Current Status" section in MASTER.md at the start and end of each session
-   - When all tasks are complete (all Issues closed or all checkboxes checked), trigger Phase 7 (Archive)
-
-**Output**: A project-level task-specific SKILL.
-
----
-
-## Phase 6: Handoff & Summary
-
-**Goal**: Present all preparation artifacts to the user and confirm readiness to begin development.
+**Goal**: Present preparation artifacts to the user, get confirmation, then execute the plan.
 
 **Actions**:
+
+### 5a. Summary & Confirmation
 
 1. Present a structured summary to the user:
    - Task definition (from Phase 2)
@@ -291,7 +255,6 @@ Use the templates in `references/templates/progress.md` for all progress documen
    - Phased plan overview with task counts (from Phase 3)
    - **Tracking mode** and what it means for the execution workflow
    - Progress tracking system description (from Phase 4)
-   - Sub-SKILL name and installation location (from Phase 5)
 
 2. List all generated artifacts:
    - `docs/analysis/project-overview.md`
@@ -302,18 +265,39 @@ Use the templates in `references/templates/progress.md` for all progress documen
    - `docs/plan/milestones.md`
    - `docs/progress/MASTER.md`
    - `docs/progress/phase-N-*.md` (LOCAL_ONLY mode, one per phase)
-   - The generated sub-SKILL
    - **[GitHub modes]** GitHub Project URL, Milestone URLs, list of created Issue numbers
 
-3. Ask the user: "All preparation is complete. Ready to begin Phase 1 development?"
+3. Ask the user: "All preparation is complete. Ready to begin execution?"
 
-**Output**: User confirmation to proceed with actual implementation.
+### 5b. Execution
+
+After user confirmation, execute tasks according to the plan:
+
+1. **Process each phase sequentially** (Phase 1 → Phase 2 → ... in the plan's phased order):
+   - For tasks in **parallel lanes**: spawn `task-executor` sub-agents simultaneously, one per lane, each in an isolated worktree. Provide each agent with: task ID, tracking mode, task description, acceptance criteria, relevant files, and coding standards from `docs/plan/task-breakdown.md`. See `references/parallel-protocol.md` for the full parallel execution protocol.
+   - For **sequential tasks**: execute them one by one, either directly or via `task-executor` agents.
+
+2. **After each task completion** — follow the adaptive control protocol (`references/adaptive-control.md` § 5.2):
+   - Collect telemetry: actual effort, S.U.P.E.R score, unplanned dependencies
+   - Calculate task drift contribution and update cumulative `drift_score`
+   - Write telemetry to Issue comment (GitHub modes) or MASTER.md (LOCAL_ONLY)
+   - Check drift thresholds — if exceeded, execute the automatic response action (annotate/replan/rescope)
+
+3. **After merging parallel lane results**: reconcile progress, sum drift contributions, and check thresholds before proceeding to the next phase.
+
+4. **Progress updates**:
+   - **GitHub modes**: PR with `closes #N` auto-closes the Issue. Update MASTER.md's "Current Status" and "Issue Mapping" sections.
+   - **LOCAL_ONLY**: Check off tasks in phase files, update counts in MASTER.md.
+
+5. **When all tasks are complete** (all Issues closed or all checkboxes checked): proceed to Phase 6 (Archive).
+
+**Output**: All planned tasks implemented and verified.
 
 ---
 
-## Phase 7: Archive
+## Phase 6: Archive
 
-**Trigger**: This phase activates when ALL tasks are complete — all Issues closed (GitHub modes) or all checkboxes marked `[x]` (LOCAL_ONLY mode).
+**Trigger**: All tasks are complete — all Issues closed (GitHub modes) or all checkboxes marked `[x]` (LOCAL_ONLY mode).
 
 **Goal**: Archive all workflow artifacts for future reference and traceability, then clean up the working directories.
 
@@ -327,7 +311,6 @@ Use the templates in `references/templates/progress.md` for all progress documen
    - Move `docs/analysis/` to `docs/archives/<project-name>/analysis/`
    - Move `docs/plan/` to `docs/archives/<project-name>/plan/`
    - Move `docs/progress/` to `docs/archives/<project-name>/progress/`
-   - Move the project-level sub-SKILL file to `docs/archives/<project-name>/skill/SKILL.md`
    - Move any other temporary files generated during development into the archive
 
 4. **[GitHub modes]** Close the GitHub Milestone for each phase (if not already closed). Optionally close the GitHub Project board. These resources remain accessible on GitHub as a permanent record.
@@ -337,7 +320,7 @@ Use the templates in `references/templates/progress.md` for all progress documen
    - If it already exists, append a new entry for this project
    - Each entry should include: project name, one-line description, date range (started — completed), link to the archived MASTER.md, and **[GitHub modes]** the GitHub Project URL
 
-6. After archiving, remove the now-empty `docs/analysis/`, `docs/plan/`, and `docs/progress/` directories from the project root's `docs/` folder, and remove the sub-SKILL's original directory if it is now empty. Only `docs/archives/` should remain under `docs/`.
+6. After archiving, remove the now-empty `docs/analysis/`, `docs/plan/`, and `docs/progress/` directories from the project root's `docs/` folder. Only `docs/archives/` should remain under `docs/`.
 
 7. Suggest to the user that they might want to commit the archive to version control.
 

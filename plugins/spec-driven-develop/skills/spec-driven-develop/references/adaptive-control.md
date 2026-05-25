@@ -281,6 +281,5 @@ After merging parallel lane results:
 |:---------------|:-----------------------------|
 | Phase 3 (Decomposition) | Initialize adaptive state in Milestone description. Compute thresholds. |
 | Phase 4 (Progress Tracking) | MASTER.md template includes telemetry section (LOCAL_ONLY) or telemetry reference (GitHub modes) |
-| Phase 5 (Sub-SKILL Generation) | Sub-SKILL includes Post-Task Telemetry as mandatory section. References this protocol. |
-| Sub-SKILL Execution | Every task completion triggers § 5.2. Every parallel merge triggers § 5.3. |
-| Phase 7 (Archive) | Archive includes final telemetry summary and drift history as execution retrospective. |
+| Phase 5 (Confirm & Execute) | Every task completion triggers § 5.2. Every parallel merge triggers § 5.3. |
+| Phase 6 (Archive) | Archive includes final telemetry summary and drift history as execution retrospective. |
