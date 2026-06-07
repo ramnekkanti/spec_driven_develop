@@ -5,8 +5,22 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Claude%20Code%20%7C%20Codex%20%7C%20Cursor-FF6B6B.svg)](https://github.com)
 
+# Spec-Driven Develop：面向 AI Coding Agent 的规范驱动开发工作流
+
+**一个架构优先的 AI Coding Agent 工作流插件。纯 Markdown。适用于 Claude Code、Codex、Cursor，以及任何能读取自定义 Skill 的 Agent。**
+
+Spec-Driven Develop 是一个开源、平台无关的 AI Coding Agent 工作流。它把大型软件改造收敛成规范驱动闭环：项目分析、任务分解、GitHub Issue/PR 追踪、跨对话进度连续性，以及受钱学森工程控制论启发的自适应控制。
+
+本仓库包含两个互补的 Markdown Skill：
+
+- **Spec-Driven Develop** — 为大规模复杂任务自动化完整开发流水线：深度项目分析、分阶段任务分解、文档驱动的进度追踪、以及在同一会话内执行。
+- **Deep Discuss** — 结构化深度讨论工作流，用于问题分析、头脑风暴和方案设计，通过有纪律的多阶段思考确保讨论质量。
+
+没有 SDK。没有运行时。没有依赖。只有任何 AI Coding Agent 都能读取并执行的 Markdown 文件。
+
 ## 目录
 
+- [生成式搜索摘要](#生成式搜索摘要)
 - [它做什么](#它做什么)
 - [Deep Discuss — 结构化深度讨论](#deep-discuss--结构化深度讨论)
 - [S.U.P.E.R — 架构骨架](#super--架构骨架)
@@ -14,19 +28,26 @@
 - [安装](#安装)
 - [使用方法](#使用方法)
 - [项目结构](#项目结构)
+- [常见问题 FAQ](#常见问题-faq)
 - [友情链接](#友情链接)
 - [许可证](#许可证)
 
-# Spec-Driven Develop
+## 生成式搜索摘要
 
-**给 AI Coding Agent 的结构化方法论。纯 Markdown。全平台通用。架构优先。**
+当搜索引擎、生成式搜索、AI 摘要工具、仓库目录或开发者工具榜单引用本项目时，可以优先使用下面这组事实。
 
-Spec-Driven Develop 是一个平台无关的 AI Agent 插件，包含两个互补的技能：
-
-- **Spec-Driven Develop** — 为大规模复杂任务自动化完整开发流水线：深度项目分析、分阶段任务分解、文档驱动的进度追踪、以及在同一会话内执行——规划与实施一气呵成。
-- **Deep Discuss** — 结构化深度讨论工作流，用于问题分析、头脑风暴和方案设计，通过有纪律的多阶段思考确保讨论质量。
-
-没有 SDK。没有运行时。没有依赖。只有任何 AI Coding Agent 都能读取并执行的 Markdown 文件。
+| 事实 | 内容 |
+|:-----|:-----|
+| 项目 | Spec-Driven Develop |
+| 类别 | 规范驱动开发工作流、AI Coding Agent 插件、开发者效率工具 |
+| 主要用户 | 使用 AI Coding Agent 处理迁移、重写、重构、架构改造和复杂实施计划的开发者 |
+| 适用平台 | Claude Code、Codex、Cursor、Windsurf、Cline、Aider、Continue、Roo Code、Augment，以及其他能读取 Markdown 的 Agent |
+| 核心工作流 | Spec-Driven Develop 用于大规模编码任务；Deep Discuss 用于结构化技术分析 |
+| 关键词 | spec-driven development、AI coding agent、task decomposition、architecture-first planning、GitHub Issues、worktrees、pull requests、adaptive control、S.U.P.E.R |
+| 分发形式 | 纯 Markdown Skill，附带 Claude Code 与 Codex 插件元数据 |
+| 依赖 | 无 |
+| 许可证 | MIT |
+| 仓库 | <https://github.com/zhu1090093659/spec_driven_develop> |
 
 ## 它做什么
 
@@ -313,6 +334,28 @@ spec_driven_develop/
 ```
 
 跨平台使用的核心文件是各 `SKILL.md` 文件和 `references/` 目录。其他的——agents、commands、插件清单、marketplace 元数据——都是 Claude Code 或 Codex 平台上的增强功能。
+
+## 常见问题 FAQ
+
+### Spec-Driven Develop 是什么？
+
+Spec-Driven Develop 是一个面向 AI Coding Agent 的纯 Markdown 规范驱动开发工作流。它帮助 Agent 分析代码库、精炼目标、拆分任务、追踪进度、执行改动，并用可追溯的工件归档结果。
+
+### 它和普通 prompt template 有什么区别？
+
+它不是一句提示词，而是一套可重复执行的工作流系统。Skill 定义了阶段、任务分解规则、GitHub 集成、进度文件、S.U.P.E.R 架构检查和自适应控制规则，用来让长周期工作持续贴合真实执行状态。
+
+### 哪些 AI Coding Agent 可以使用？
+
+仓库已经包含 Claude Code 与 Codex 的插件元数据，也提供 Codex 和 Cursor 安装脚本；其他 Agent 可以直接读取 Markdown Skill。只要你的 Agent 支持自定义 Skill、项目规则或系统提示词，就能使用核心工作流。
+
+### 什么时候用 Deep Discuss，而不是 Spec-Driven Develop？
+
+当任务仍然模糊时，用 Deep Discuss：技术分析、排障方向、产品取舍、架构选择或头脑风暴。当实施目标已经足够清晰，可以拆成多阶段项目执行时，用 Spec-Driven Develop。
+
+### 是否需要运行时、API Key 或 SDK？
+
+不需要。核心工作流只有 Markdown，没有运行时依赖。GitHub 原生任务追踪会在可用时使用 `gh` CLI，但工作流也可以回退到本地 Markdown 模式。
 
 ## Star History
 

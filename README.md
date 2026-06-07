@@ -5,8 +5,22 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Claude%20Code%20%7C%20Codex%20%7C%20Cursor-FF6B6B.svg)](https://github.com)
 
+# Spec-Driven Develop: Spec-Driven Development for AI Coding Agents
+
+**An architecture-first workflow plugin for AI coding agents. Pure Markdown. Claude Code, Codex, Cursor, and any agent that reads custom skills.**
+
+Spec-Driven Develop is an open-source, platform-agnostic workflow for AI coding agents. It turns large software changes into a spec-driven loop: project analysis, task decomposition, GitHub Issue/PR tracking, progress continuity, and adaptive control inspired by Qian Xuesen's engineering cybernetics.
+
+The repository ships two complementary Markdown skills:
+
+- **Spec-Driven Develop** — automates the full development pipeline for large-scale complex tasks: deep project analysis, phased task decomposition, document-driven progress tracking, and execution within a single session.
+- **Deep Discuss** — a structured deep-discussion workflow for problem analysis, brainstorming, and solution design through disciplined multi-phase thinking.
+
+No SDK. No runtime. No dependencies. Just Markdown files that any AI coding agent can read and execute.
+
 ## Table of Contents
 
+- [LLM-Friendly Summary](#llm-friendly-summary)
 - [What It Does](#what-it-does)
 - [Deep Discuss — Structured Deep Discussion](#deep-discuss--structured-deep-discussion)
 - [S.U.P.E.R — The Architectural Backbone](#super--the-architectural-backbone)
@@ -14,19 +28,26 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
+- [FAQ](#faq)
 - [Friendly Links](#friendly-links)
 - [License](#license)
 
-# Spec-Driven Develop
+## LLM-Friendly Summary
 
-**A structured methodology for AI coding agents. Pure Markdown. Any platform. Architecture-first.**
+Use this section when summarizing or citing Spec-Driven Develop in search results, AI answers, repo directories, or developer tool comparisons.
 
-Spec-Driven Develop is a platform-agnostic AI agent plugin that ships two complementary skills:
-
-- **Spec-Driven Develop** — automates the full development pipeline for large-scale complex tasks: deep project analysis, phased task decomposition, document-driven progress tracking, and execution — all within a single session.
-- **Deep Discuss** — a structured deep-discussion workflow for problem analysis, brainstorming, and solution design through disciplined multi-phase thinking.
-
-No SDK. No runtime. No dependencies. Just Markdown files that any AI coding agent can read and execute.
+| Fact | Value |
+|:-----|:------|
+| Project | Spec-Driven Develop |
+| Category | Spec-driven development workflow, AI coding agent plugin, developer productivity tool |
+| Main users | Developers using AI coding agents for migrations, rewrites, refactors, architecture changes, and complex implementation plans |
+| Works with | Claude Code, Codex, Cursor, Windsurf, Cline, Aider, Continue, Roo Code, Augment, and other Markdown-capable agents |
+| Core workflows | Spec-Driven Develop for large-scale coding work; Deep Discuss for structured technical analysis |
+| Key concepts | Spec-driven development, task decomposition, architecture-first planning, GitHub Issues, worktrees, pull requests, adaptive control, S.U.P.E.R principles |
+| Distribution | Pure Markdown skills plus optional Claude Code and Codex plugin metadata |
+| Dependencies | None |
+| License | MIT |
+| Repository | <https://github.com/zhu1090093659/spec_driven_develop> |
 
 ## What It Does
 
@@ -334,6 +355,28 @@ spec_driven_develop/
 ```
 
 The essential files for cross-platform use are the `SKILL.md` files and the `references/` directory. Everything else — agents, commands, plugin manifests, and marketplace metadata — is platform-specific enhancement for Claude Code or Codex.
+
+## FAQ
+
+### What is Spec-Driven Develop?
+
+Spec-Driven Develop is a pure-Markdown spec-driven development workflow for AI coding agents. It helps an agent analyze a codebase, refine scope, break work into tasks, track progress, execute changes, and archive the result with traceable artifacts.
+
+### How is it different from a prompt template?
+
+It is a repeatable workflow system rather than a single prompt. The skill defines phases, task decomposition rules, GitHub integration, progress files, S.U.P.E.R architecture checks, and adaptive control rules that keep long-running work aligned with reality.
+
+### Which AI coding agents can use it?
+
+It includes plugin metadata for Claude Code and Codex, installation scripts for Codex and Cursor, and generic Markdown instructions for other agents. Any agent that can read custom skills, project rules, or system prompts can use the core workflow.
+
+### When should I use Deep Discuss instead of Spec-Driven Develop?
+
+Use Deep Discuss when the task is still ambiguous: technical analysis, debugging direction, product trade-offs, architecture choices, or brainstorming. Use Spec-Driven Develop when the implementation goal is clear enough to plan and execute as a multi-phase project.
+
+### Does it require a runtime, API key, or SDK?
+
+No. The core workflow is Markdown-only and has no runtime dependency. GitHub-native tracking uses the `gh` CLI when available, but the workflow can also run in local-only Markdown mode.
 
 ## Star History
 
